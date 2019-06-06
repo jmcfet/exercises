@@ -71,41 +71,79 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter * 2',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+      body: myLayoutWidget(),
+
+    );
+  }
+  Widget myLayoutWidget() {
+    double cellheight = 20;
+    // wrap everything in a purple container
+    return Container(
+      margin: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.purple[900],
+        border: Border.all(),
+        borderRadius: BorderRadius.all(Radius.circular(3.0)),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
+      // column of three rows
+      child: Column(
+
+        // this makes the column height hug its content
+        mainAxisSize: MainAxisSize.min,
+        children: [
+
+          // first row
+          Row(
+            children: [
+              CreateContainer( 100 , cellheight * 1 ),
+              CreateContainer( 100 , cellheight * 3 ),
+            ],
+          ),
+
+          Row(
+            children: [
+              CreateContainer( 100 , cellheight * 6 ),
+              CreateContainer( 100 , cellheight * 3 ),
+            ],
+          ),
+
+          // third row
+          Row(
+            children: [
+              Text('EXPLORE BEAMS',
+                style: TextStyle(
+                  color: Colors.green,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Icon(Icons.arrow_forward,
+                  color: Colors.green,
+                ),
+              ),
+            ],
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget CreateContainer(double cellwidth, double cellheight)
+  {
+    return Container(
+
+      padding: EdgeInsets.all(10.0),
+      alignment: Alignment.topCenter,
+      width: cellwidth,
+      height: cellheight,
+      decoration: BoxDecoration(
+        color: Colors.green,
+        border: Border.all(),
+      ),
+      child: Text("Hello", style: TextStyle(fontSize: 30)),
     );
   }
 }
