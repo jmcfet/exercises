@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
-
+//m
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              '$_counter * 2',
               style: Theme.of(context).textTheme.display1,
             ),
           ],
