@@ -76,7 +76,135 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Widget myLayoutWidget() {
-    double cellheight = 20;
+    Exercise ex0 = new Exercise("ex 1");
+    Exercise ex1 = new Exercise("ex 2");
+    Exercise ex2 = new Exercise("ex 3");
+    Exercise ex3 = new Exercise("ex 4");
+    Exercise ex4 = new Exercise("ex 5");
+    Exercise ex5 = new Exercise("ex 1");
+    Exercise ex6 = new Exercise("ex 2");
+    Exercise ex7 = new Exercise("ex 3");
+    Exercise ex8 = new Exercise("ex 4");
+    Exercise ex9 = new Exercise("ex 5");
+    List<Group> groups = new List();
+    Group g1 = new Group("g1");
+    Group g2 = new Group("g2");
+    Group g3 = new Group("g3");
+    g1.exers.add(ex0);
+    g1.exers.add(ex1);
+    groups.add(g1);
+
+    g2.exers.add(ex3);
+    g2.exers.add(ex2);
+    g2.exers.add(ex3);
+    groups.add(g2);
+
+    g3.exers.add(ex4);
+    g3.exers.add(ex5);
+    g3.exers.add(ex6);
+    g3.exers.add(ex3);
+    g3.exers.add(ex2);
+    groups.add(g3);
+    double cellheight = 30;
+    Column col = new Column();
+    List<Widget> rows = new List<Widget>();
+    List<Widget> widgetsforrow = new List<Widget>();
+
+    groups.forEach((g)  {
+      int loops = g.exers.length > 3 ? g.exers.length : 3;
+      for (int i=0;i< loops; i++) {
+        List<Widget> widgetsforrow = new List<Widget>();
+        bool needleft = false ;
+        bool needright = false;
+        if (i < g.exers.length  )
+          needleft = true;
+        if (i < 3)
+          needright = true;
+        if (needleft) {
+          Widget w = Container(
+
+
+            alignment: Alignment.topCenter,
+            width: 40,
+            height: cellheight,
+
+            child:
+            Text(g.exers[i].Name,
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          ),
+          );
+          widgetsforrow.add(w);
+          widgetsforrow.add(new Container(
+            width:40,
+            height: cellheight,
+            alignment: Alignment.center,
+            child: Image.asset(
+              "assets/images/dogs.jpeg",
+              fit: BoxFit.cover,
+            ),
+          )
+          );
+
+          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+        }
+        if (needright && needleft) {
+          var box = SizedBox(
+            width: 10,
+            height: cellheight,
+
+          );
+          widgetsforrow.add(box);
+          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+        }
+        if (needright && !needleft) {
+
+          var box = SizedBox(
+            width: 120,
+            height: cellheight,
+
+          );
+          widgetsforrow.add(box);
+          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+        }
+        Row myrow = new Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: widgetsforrow);
+
+        rows.add(myrow);
+        List<Widget> widgetsforspacerrow = new List<Widget>();
+        //produce spacer row between rows in group an groups
+        double height1 = 3;
+        if (i == loops-1){
+           height1 = 20;
+
+           widgetsforspacerrow.add(new SizedBox(
+               width: 100,
+               height: height1,
+
+             )
+           );
+          Row spacerRow = new Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: widgetsforspacerrow);
+
+          rows.add(spacerRow);
+        }
+
+    }
+  });
+
+
+    //for (int i=0;i<3; i++) {
+    //  Row row = new Row();
+      //rows.add(Row)
+   //   rows.add(CreateContainer( 100, cellheight * 1));
+    //  row.children.add(CreateContainer(100, cellheight * 1));
+    //}
+
     // wrap everything in a purple container
     return Container(
       margin: EdgeInsets.all(16.0),
@@ -92,9 +220,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
         // this makes the column height hug its content
         mainAxisSize: MainAxisSize.min,
-        children: [
-
-          // first row
+        children: rows
+/*
+           // first row
           Row(
             children: [
               CreateContainer( 100 , cellheight * 1 ),
@@ -127,15 +255,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
 
         ],
+         */
       ),
+
     );
   }
 
-  Widget CreateContainer(double cellwidth, double cellheight)
+  Widget CreateContainer( double cellwidth, double cellheight,double offset)
   {
-    return Container(
 
-      padding: EdgeInsets.all(10.0),
+    Widget w = Container(
+
+      padding: EdgeInsets.only(left:offset),
       alignment: Alignment.topCenter,
       width: cellwidth,
       height: cellheight,
@@ -143,7 +274,22 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.green,
         border: Border.all(),
       ),
-      child: Text("Hello", style: TextStyle(fontSize: 30)),
+
     );
+   // row.children.add(w);
+    return w;
+  }
+
+}
+class Exercise {
+    String Name;
+    Exercise(this.Name);
+}
+
+class Group{
+  String Name;
+  List<Exercise> exers ;
+  Group(this.Name){
+    this.exers = new List <Exercise>();
   }
 }
