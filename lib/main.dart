@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'playVideo.dart';
 void main() => runApp(MyApp());
 //m
 class MyApp extends StatelessWidget {
@@ -45,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  double cellheight = 30;
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -56,7 +56,28 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+  Widget makeButton() {
+    return new SizedBox(
+        height: cellheight,
+        width: 40,
+        child: new IconButton(
 
+          icon: Icon(Icons.play_circle_filled),
+          tooltip: 'Increase volume by 10',
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(  // transitions to the new route using a platform-specific animation.
+                    builder: (context) => PlayVideo(
+                      videoURL: 'https://www.youtube.com/watch?v=C0DPdy98e4c',
+                    )
+                )
+            );
+          },
+        )
+    );
+
+  }
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -105,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
     g3.exers.add(ex3);
     g3.exers.add(ex2);
     groups.add(g3);
-    double cellheight = 30;
+
     Column col = new Column();
     List<Widget> rows = new List<Widget>();
     List<Widget> widgetsforrow = new List<Widget>();
@@ -146,8 +167,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
           );
+          widgetsforrow.add(makeButton() );
 
-          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
         }
         if (needright && needleft) {
           var box = SizedBox(
@@ -210,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
       margin: EdgeInsets.all(16.0),
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.purple[900],
+      //  color: Colors.purple[900],
         border: Border.all(),
         borderRadius: BorderRadius.all(Radius.circular(3.0)),
       ),
@@ -221,41 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // this makes the column height hug its content
         mainAxisSize: MainAxisSize.min,
         children: rows
-/*
-           // first row
-          Row(
-            children: [
-              CreateContainer( 100 , cellheight * 1 ),
-              CreateContainer( 100 , cellheight * 3 ),
-            ],
-          ),
 
-          Row(
-            children: [
-              CreateContainer( 100 , cellheight * 6 ),
-              CreateContainer( 100 , cellheight * 3 ),
-            ],
-          ),
-
-          // third row
-          Row(
-            children: [
-              Text('EXPLORE BEAMS',
-                style: TextStyle(
-                  color: Colors.green,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Icon(Icons.arrow_forward,
-                  color: Colors.green,
-                ),
-              ),
-            ],
-          ),
-
-        ],
-         */
       ),
 
     );
