@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'SIS),
     );
   }
 }
@@ -44,18 +44,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- 
+
   double cellheight = 30;
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  double cellWidth = 40;
   Widget makeButton() {
     return new SizedBox(
         height: cellheight,
@@ -69,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 context,
                 MaterialPageRoute(  // transitions to the new route using a platform-specific animation.
                     builder: (context) => PlayVideo(
-                      videoURL: 'https://www.youtube.com/watch?v=C0DPdy98e4c',
+                      videoURL: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4',
                     )
                 )
             );
@@ -98,15 +89,42 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   Widget myLayoutWidget() {
     Exercise ex0 = new Exercise("ex 1");
+    ex0.settings.add(new Setting("Height","5.6"));
+    ex0.settings.add(new Setting("Shoulder","53"));
+    ex0.settings.add(new Setting("arm angle","53"));
     Exercise ex1 = new Exercise("ex 2");
+    ex1.settings.add(new Setting("Height","5.6"));
+    ex1.settings.add(new Setting("Shoulder","53"));
+    ex1.settings.add(new Setting("arm angle","53"));
     Exercise ex2 = new Exercise("ex 3");
+    ex2.settings.add(new Setting("Height","5.6"));
+    ex2.settings.add(new Setting("Shoulder","53"));
+    ex2.settings.add(new Setting("arm angle","53"));
     Exercise ex3 = new Exercise("ex 4");
+    ex3.settings.add(new Setting("Height","5.6"));
+    ex3.settings.add(new Setting("Shoulder","53"));
+    ex3.settings.add(new Setting("arm angle","53"));
     Exercise ex4 = new Exercise("ex 5");
-    Exercise ex5 = new Exercise("ex 1");
-    Exercise ex6 = new Exercise("ex 2");
-    Exercise ex7 = new Exercise("ex 3");
-    Exercise ex8 = new Exercise("ex 4");
-    Exercise ex9 = new Exercise("ex 5");
+    ex4.settings.add(new Setting("Height","5.6"));
+    ex4.settings.add(new Setting("Shoulder","53"));
+    ex4.settings.add(new Setting("arm angle","53"));
+    Exercise ex5 = new Exercise("ex 6");
+    ex5.settings.add(new Setting("Height","5.6"));
+    ex5.settings.add(new Setting("Shoulder","53"));
+    ex5.settings.add(new Setting("arm angle","53"));
+    Exercise ex6 = new Exercise("ex 7");
+    ex6.settings.add(new Setting("Height","5.6"));
+    ex6.settings.add(new Setting("Shoulder","53"));
+    ex6.settings.add(new Setting("arm angle","53"));
+    Exercise ex7 = new Exercise("ex 8");
+    ex7.settings.add(new Setting("Height","5.6"));
+    ex7.settings.add(new Setting("Shoulder","53"));
+    ex7.settings.add(new Setting("arm angle","53"));
+    Exercise ex8 = new Exercise("ex 9");
+    ex8.settings.add(new Setting("Height","5.6"));
+    ex8.settings.add(new Setting("Shoulder","53"));
+    ex8.settings.add(new Setting("arm angle","53"));
+  //  Exercise ex9 = new Exercise("ex 10");
     List<Group> groups = new List();
     Group g1 = new Group("g1");
     Group g2 = new Group("g2");
@@ -146,19 +164,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
             alignment: Alignment.topCenter,
-            width: 40,
+            width: cellWidth,
             height: cellheight,
 
             child:
             Text(g.exers[i].Name,
-            style: TextStyle(
-              color: Colors.green,
+              style: TextStyle(
+                color: Colors.green,
+              ),
             ),
-          ),
           );
           widgetsforrow.add(w);
           widgetsforrow.add(new Container(
-            width:40,
+            width:cellWidth,
             height: cellheight,
             alignment: Alignment.center,
             child: Image.asset(
@@ -177,19 +195,75 @@ class _MyHomePageState extends State<MyHomePage> {
 
           );
           widgetsforrow.add(box);
-          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
-          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+          Widget w = Container(
+
+
+            alignment: Alignment.topCenter,
+            width: 100,
+            height: cellheight,
+
+            child:
+            Text(g.exers[i].settings[i] != null ? g.exers[i].settings[i].Name : '',
+              style: TextStyle(
+                color: Colors.green,
+              ),
+            ),
+          );
+          widgetsforrow.add(w);
+           w = Container(
+
+
+            alignment: Alignment.topCenter,
+            width: 40,
+            height: cellheight,
+
+            child:
+            Text(g.exers[i].settings[i] != null ? g.exers[i].settings[i].Value : '',
+              style: TextStyle(
+                color: Colors.green,
+              ),
+            ),
+          );
+          widgetsforrow.add(w);
         }
         if (needright && !needleft) {
 
           var box = SizedBox(
-            width: 120,
+            width: cellWidth * 3 + 10,
             height: cellheight,
 
           );
           widgetsforrow.add(box);
-          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
-          widgetsforrow.add(CreateContainer(30, cellheight * 1,10));
+          Widget w = Container(
+
+
+            alignment: Alignment.topCenter,
+            width: 60,
+            height: cellheight,
+
+            child:
+            Text(g.exers[0].settings[0] != null ? g.exers[0].settings[0].Name : '',
+              style: TextStyle(
+                color: Colors.green,
+              ),
+            ),
+          );
+          widgetsforrow.add(w);
+          w = Container(
+
+
+            alignment: Alignment.topCenter,
+            width: 60,
+            height: cellheight,
+
+            child:
+            Text(g.exers[0].settings[0] != null ? g.exers[0].settings[0].Value : '',
+              style: TextStyle(
+                color: Colors.green,
+              ),
+            ),
+          );
+          widgetsforrow.add(w);
         }
         Row myrow = new Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -270,7 +344,10 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 class Exercise {
     String Name;
-    Exercise(this.Name);
+    List<Setting> settings ;
+    Exercise(this.Name){
+      this.settings = new List<Setting>();
+    }
 }
 
 class Group{
@@ -279,4 +356,11 @@ class Group{
   Group(this.Name){
     this.exers = new List <Exercise>();
   }
+
+}
+
+class Setting{
+  String Name;
+  String Value;
+  Setting(this.Name,this.Value);
 }
