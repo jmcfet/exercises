@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'SIS),
+      home: MyHomePage(title: 'SIS'),
     );
   }
 }
@@ -151,6 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     groups.forEach((g)  {
       int loops = g.exers.length > 3 ? g.exers.length : 3;
+      int nSetting = 0;
       for (int i=0;i< loops; i++) {
         List<Widget> widgetsforrow = new List<Widget>();
         bool needleft = false ;
@@ -203,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: cellheight,
 
             child:
-            Text(g.exers[i].settings[i] != null ? g.exers[i].settings[i].Name : '',
+            Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Name : '',
               style: TextStyle(
                 color: Colors.green,
               ),
@@ -218,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: cellheight,
 
             child:
-            Text(g.exers[i].settings[i] != null ? g.exers[i].settings[i].Value : '',
+            Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Value : '',
               style: TextStyle(
                 color: Colors.green,
               ),
@@ -238,11 +239,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
             alignment: Alignment.topCenter,
-            width: 60,
+            width: 100,
             height: cellheight,
-
+//all exercises in group have same settings
             child:
-            Text(g.exers[0].settings[0] != null ? g.exers[0].settings[0].Name : '',
+            Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Name : '',
               style: TextStyle(
                 color: Colors.green,
               ),
@@ -270,6 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: widgetsforrow);
 
         rows.add(myrow);
+        nSetting++;
         List<Widget> widgetsforspacerrow = new List<Widget>();
         //produce spacer row between rows in group an groups
         double height1 = 3;
