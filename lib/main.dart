@@ -47,28 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double cellheight = 30;
   double cellWidth = 40;
-  Widget makeButton() {
-    return new SizedBox(
-        height: cellheight,
-        width: 40,
-        child: new IconButton(
 
-          icon: Icon(Icons.play_circle_filled),
-          tooltip: 'Increase volume by 10',
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(  // transitions to the new route using a platform-specific animation.
-                    builder: (context) => PlayVideo(
-                      videoURL: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4',
-                    )
-                )
-            );
-          },
-        )
-    );
-
-  }
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -88,6 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Widget myLayoutWidget() {
+    double nWidgits = 6;
+    double width = MediaQuery.of(context).size.width;
+    double extraForSpacer = 10;
+    double extraForText = 15.0 * 2;
+    double unitsize = (width - (extraForSpacer + extraForText)) / nWidgits;
+    //double unitsize = 50;
     Exercise ex0 = new Exercise("ex 1");
     ex0.settings.add(new Setting("Height","5.6"));
     ex0.settings.add(new Setting("Shoulder","53"));
@@ -161,67 +146,70 @@ class _MyHomePageState extends State<MyHomePage> {
         if (i < 3)
           needright = true;
         if (needleft) {
-          Widget w = Container(
+          Widget exName = Container(
+            alignment: Alignment.center,
+            width: unitsize,
 
-
-            alignment: Alignment.topCenter,
-            width: cellWidth,
             height: cellheight,
-
+         //   color:Colors.cyan,
             child:
             Text(g.exers[i].Name,
               style: TextStyle(
-                color: Colors.green,
+                fontSize: 16,
+                color: Colors.black,
               ),
             ),
           );
-          widgetsforrow.add(w);
+          widgetsforrow.add(exName);
+          //add image
           widgetsforrow.add(new Container(
-            width:cellWidth,
+          //  color: Colors.red,
+            width:unitsize,
             height: cellheight,
             alignment: Alignment.center,
             child: Image.asset(
               "assets/images/dogs.jpeg",
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           )
           );
-          widgetsforrow.add(makeButton() );
+          //add play button
+          widgetsforrow.add(makeButton(context,cellheight,unitsize) );
 
         }
         if (needright && needleft) {
-          var box = SizedBox(
-            width: 10,
+          var myspacer =Container(
+            width: unitsize ,
             height: cellheight,
+
+              color:Colors.red
 
           );
-          widgetsforrow.add(box);
+      //    widgetsforrow.add(myspacer);
+
           Widget w = Container(
-
-
-            alignment: Alignment.topCenter,
-            width: 100,
+            alignment: Alignment.center,
+            width: unitsize + 15,
             height: cellheight,
-
+            color:Colors.white,
             child:
             Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Name : '',
               style: TextStyle(
-                color: Colors.green,
+                color: Colors.black38,
               ),
             ),
           );
           widgetsforrow.add(w);
+
            w = Container(
-
-
-            alignment: Alignment.topCenter,
-            width: 40,
+            alignment: Alignment.center,
+            width: unitsize + 15,
             height: cellheight,
-
+            color:Colors.white,
             child:
             Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Value : '',
               style: TextStyle(
-                color: Colors.green,
+                color: Colors.blue,
               ),
             ),
           );
@@ -229,38 +217,38 @@ class _MyHomePageState extends State<MyHomePage> {
         }
         if (needright && !needleft) {
 
-          var box = SizedBox(
-            width: cellWidth * 3 + 10,
+          var box = Container(
+            width: unitsize * 3 ,
             height: cellheight,
-
+          //  color: Colors.black   ,
           );
           widgetsforrow.add(box);
+
           Widget w = Container(
 
 
-            alignment: Alignment.topCenter,
-            width: 100,
+            alignment: Alignment.center,
+            color:Colors.white,
+            width: unitsize + 15,
             height: cellheight,
 //all exercises in group have same settings
             child:
             Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Name : '',
               style: TextStyle(
-                color: Colors.green,
+                color: Colors.black38,
               ),
             ),
           );
           widgetsforrow.add(w);
           w = Container(
-
-
-            alignment: Alignment.topCenter,
-            width: 60,
+            alignment: Alignment.center,
+            width: unitsize + 15,
             height: cellheight,
 
             child:
             Text(g.exers[0].settings[0] != null ? g.exers[0].settings[0].Value : '',
               style: TextStyle(
-                color: Colors.green,
+                color: Colors.blue,
               ),
             ),
           );
@@ -271,6 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: widgetsforrow);
 
         rows.add(myrow);
+
         nSetting++;
         List<Widget> widgetsforspacerrow = new List<Widget>();
         //produce spacer row between rows in group an groups
@@ -290,6 +279,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
           rows.add(spacerRow);
         }
+        else{
+          widgetsforspacerrow.add(new SizedBox(
+            width: 100,
+            height: 5,
+
+          )
+          );
+          Row spacerRow = new Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: widgetsforspacerrow);
+
+          rows.add(spacerRow);
+        }
 
     }
   });
@@ -302,12 +304,12 @@ class _MyHomePageState extends State<MyHomePage> {
     //  row.children.add(CreateContainer(100, cellheight * 1));
     //}
 
-    // wrap everything in a purple container
+    // wrap everything in a white container
     return Container(
       margin: EdgeInsets.all(16.0),
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-      //  color: Colors.purple[900],
+        color: Colors.grey[150],
         border: Border.all(),
         borderRadius: BorderRadius.all(Radius.circular(3.0)),
       ),
@@ -342,6 +344,31 @@ class _MyHomePageState extends State<MyHomePage> {
    // row.children.add(w);
     return w;
   }
+
+}
+Widget makeButton(var context,double cellHeight,double cellWidth) {
+  return new Container(
+      height: cellHeight,
+      width: cellWidth,
+    //  color:Colors.blue,
+      child: new IconButton(
+        padding: new EdgeInsets.all(0.0),
+        iconSize: cellHeight,
+        alignment: Alignment.topLeft,
+        icon: Icon(Icons.play_circle_filled),
+        tooltip: 'Increase volume by 10',
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(  // transitions to the new route using a platform-specific animation.
+                  builder: (context) => PlayVideo(
+                    videoURL: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4',
+                  )
+              )
+          );
+        },
+      )
+  );
 
 }
 class Exercise {
