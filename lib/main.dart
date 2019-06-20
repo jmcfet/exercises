@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double cellheight = 30;
   double cellWidth = 40;
-
+  double unitsize;
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
     double width = MediaQuery.of(context).size.width;
     double extraForSpacer = 10;
     double extraForText = 15.0 * 2;
-    double unitsize = (width - (extraForSpacer + extraForText)) / nWidgits;
+    unitsize = (width - (extraForSpacer + extraForText)) / nWidgits;
     //double unitsize = 50;
     Exercise ex0 = new Exercise("ex 1");
     ex0.settings.add(new Setting("Height","5.6"));
@@ -132,7 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Column col = new Column();
     List<Widget> rows = new List<Widget>();
-    List<Widget> widgetsforrow = new List<Widget>();
+
+    showSettingLabel(rows);
 
     groups.forEach((g)  {
       int loops = g.exers.length > 3 ? g.exers.length : 3;
@@ -186,34 +187,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
           );
       //    widgetsforrow.add(myspacer);
+          showSetting(g,nSetting,widgetsforrow);
 
-          Widget w = Container(
-            alignment: Alignment.center,
-            width: unitsize + 15,
-            height: cellheight,
-            color:Colors.white,
-            child:
-            Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Name : '',
-              style: TextStyle(
-                color: Colors.black38,
-              ),
-            ),
-          );
-          widgetsforrow.add(w);
-
-           w = Container(
-            alignment: Alignment.center,
-            width: unitsize + 15,
-            height: cellheight,
-            color:Colors.white,
-            child:
-            Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Value : '',
-              style: TextStyle(
-                color: Colors.blue,
-              ),
-            ),
-          );
-          widgetsforrow.add(w);
         }
         if (needright && !needleft) {
 
@@ -224,35 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
           widgetsforrow.add(box);
 
-          Widget w = Container(
-
-
-            alignment: Alignment.center,
-            color:Colors.white,
-            width: unitsize + 15,
-            height: cellheight,
-//all exercises in group have same settings
-            child:
-            Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting].Name : '',
-              style: TextStyle(
-                color: Colors.black38,
-              ),
-            ),
-          );
-          widgetsforrow.add(w);
-          w = Container(
-            alignment: Alignment.center,
-            width: unitsize + 15,
-            height: cellheight,
-
-            child:
-            Text(g.exers[0].settings[0] != null ? g.exers[0].settings[0].Value : '',
-              style: TextStyle(
-                color: Colors.blue,
-              ),
-            ),
-          );
-          widgetsforrow.add(w);
+          showSetting(g,nSetting,widgetsforrow);
         }
         Row myrow = new Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -262,22 +209,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
         nSetting++;
         List<Widget> widgetsforspacerrow = new List<Widget>();
-        //produce spacer row between rows in group an groups
-        double height1 = 3;
+        //produce spacer row between rows and   group an groups
+
         if (i == loops-1){
-           height1 = 20;
+          if (g != groups.last)
+            showSettingLabel(rows);
 
-           widgetsforspacerrow.add(new SizedBox(
-               width: 100,
-               height: height1,
-
-             )
-           );
-          Row spacerRow = new Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: widgetsforspacerrow);
-
-          rows.add(spacerRow);
         }
         else{
           widgetsforspacerrow.add(new SizedBox(
@@ -324,6 +261,67 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
     );
+  }
+
+  showSettingLabel(List<Widget> rows){
+    List<Widget> widgetsforspacerrow = new List<Widget>();
+    widgetsforspacerrow.add(new SizedBox(
+      width: unitsize * 3,
+      height: cellheight,
+
+      )
+    );
+    Widget label = Container(
+      alignment: Alignment.centerLeft,
+      width: unitsize * 2,
+
+      height: cellheight,
+      //   color:Colors.cyan,
+      child:
+      Text("Set machine before ",
+        style: TextStyle(
+          fontSize: 10,
+          color: Colors.red,
+        ),
+      ),
+    );
+    widgetsforspacerrow.add(label);
+
+    Row labelRow = new Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: widgetsforspacerrow);
+    rows.add(labelRow);
+  }
+  showSetting(Group g,int nSetting,List<Widget> rows) {
+    Widget w = Container(
+      alignment: Alignment.bottomLeft,
+      width: unitsize + 40,
+      height: cellheight,
+      color: Colors.white,
+      child:
+      Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting]
+          .Name : '',
+        style: TextStyle(
+          color: Colors.black38,
+        ),
+      ),
+    );
+    rows.add(w);
+
+    w = Container(
+      alignment: Alignment.center,
+      width: unitsize -15,
+      height: cellheight,
+      color: Colors.white,
+      child:
+      Text(g.exers[0].settings[nSetting] != null ? g.exers[0].settings[nSetting]
+          .Value : '',
+        style: TextStyle(
+          color: Colors.blue,
+        ),
+      ),
+    );
+    rows.add(w);
   }
 
   Widget CreateContainer( double cellwidth, double cellheight,double offset)
