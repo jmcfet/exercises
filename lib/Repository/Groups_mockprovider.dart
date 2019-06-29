@@ -13,15 +13,16 @@ class GroupMockProvider {
   //  _setupLoggingInterceptor();
   }
 
-  GroupsResponse getGroups()  {
+  Future<GroupsResponse>  getGroups()  =>
   //  try {
    //   Response response = await _dio.get(_endpoint);
-      return GroupsResponse.mock(mockdata());
+    Future.delayed(Duration(seconds: 1), () =>  GroupsResponse.mock(mockdata()));
+
   //  } catch (error, stacktrace) {
    //   print("Exception occured: $error stackTrace: $stacktrace");
   //    return UserResponse.withError(_handleError(error));
    // }
-  }
+
 
   List<Group> mockdata()
   {

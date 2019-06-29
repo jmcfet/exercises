@@ -4,7 +4,7 @@ import 'package:exercises/models/group_response.dart';
 class GroupsRepository{
   GroupMockProvider _apiProvider = GroupMockProvider();
 
-  GroupsResponse getGroups(){
+  Future<GroupsResponse> getGroups(){
     return _apiProvider.getGroups();
   }
 }

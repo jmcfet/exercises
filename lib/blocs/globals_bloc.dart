@@ -7,9 +7,9 @@ class GroupsBloc {
   final BehaviorSubject<GroupsResponse> _subject =
   BehaviorSubject<GroupsResponse>();
 
-  //getGroups() async {
-  getGroups(){
-    GroupsResponse response =  _repository.getGroups();
+  getGroups() async {
+  //getGroups(){
+    GroupsResponse response =  await _repository.getGroups();
     _subject.sink.add(response);
   }
 
